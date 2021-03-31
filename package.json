@@ -1,0 +1,70 @@
+{
+  "name": "sand-build",
+  "version": "1.0.0",
+  "description": "基于rollup和babel的多包构建器",
+  "authors": [
+    {
+      "name": "jianghe",
+      "email": "573748150jh@163.com"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zirupay/sand-build.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "bugs": {
+    "url": "https://github.com/zirupay/sand-build/issues"
+  },
+  "homepage": "https://github.com/zirupay/sand-build#readme",
+  "engines": {
+    "node": ">=12"
+  },
+  "scripts": {
+    "init": "npm run clean && npm i && npm run bootstrap",
+    "clean": "npm run clean:base && npm run clean:debug && npx lerna clean --yes",
+    "clean:base": "rm -rf ./node_modules ./coverage ./package-lock.json ./dist ./packages/*/{dist,es,lib,node_modules}",
+    "clean:debug": "rm -rf ./debug/*/{dist,es,lib} ./debug/*/*/*/{dist,es,lib}",
+    "bootstrap": "npx lerna bootstrap && npm run build",
+    "build": "npx sand-build build -t lib -e development -l",
+    "build:watch": "npx sand-build build -t lib -e development -w -l",
+    "build:production": "npx sand-build build -t lib -e production -l",
+    "start": "npx sand-build start -t lib -e development -w -l",
+    "publish": "npm run build:production && npx lerna publish",
+    "publish:beta": "npm run build:production && npx lerna publish --dist-tag=beta",
+    "lint": "eslint ./packages --ext .jsx,.js,.ts,.tsx",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:style": "stylelint \"packages/**/*.less\" --syntax less",
+    "lint:style:fix": "npm run lint:style -- --fix",
+    "test": "jest",
+    "ci": "npm run lint && npm run lint:style && npm run test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run ci",
+      "commit-msg": "npx commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.13.12",
+    "@babel/preset-typescript": "^7.13.0",
+    "@commitlint/cli": "^12.0.1",
+    "@jianghe/sand-build": "2.1.2",
+    "@jianghe/sand-lint": "2.1.2",
+    "@types/jest": "^26.0.22",
+    "eslint": "^7.23.0",
+    "husky": "^5.2.0",
+    "jest": "^26.6.3",
+    "jest-css-modules": "^2.1.0",
+    "lerna": "3.22.1",
+    "stylelint": "^13.12.0",
+    "ts-jest": "^26.5.4",
+    "typescript": "^3.9.9"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.13.10"
+  }
+}

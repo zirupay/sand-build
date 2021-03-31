@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "packages": [
+    "packages/sand-build"
+  ],
+  "npmClient": "npm",
+  "command": {
+    "bootstrap": {
+      "hoist": true
+    },
+    "version": {
+      "conventionalCommits": false
+    },
+    "publish": {
+      "registry": "https://npm.pkg.github.com",
+      "allowBranch": [
+        "master"
+      ],
+      "verifyAccess": false
+    }
+  }
+}
